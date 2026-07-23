@@ -1,0 +1,64 @@
+{% extends "farmacia/base_farm.html" %}
+{% block title %}Pedidos{% endblock %}
+{% block content %}
+  <div class="dash-header-row">
+    <div>
+      <h2>Pedidos de receita — {{ farm.farmacia.nome }}</h2>
+      <p>Confirme se tem a medicação da recomendação do médico/enfermeiro e informe o preço para o paciente.</p>
+    </div>
+  </div>
+
+  <div class="dash-card">
+    <h3><i class="bi bi-hourglass-split"></i> Aguardando resposta ({{ pendentes|length }})</h3>
+    {% if pendentes %}
+      {% for pedido in pendentes %}
+        <div class="pedido-farmacia-card">
+          <div class="pedido-info">
+            <h4>{{ pedido.receita_paciente.recomendacao.titulo }}</h4>
+            <p class="meta">Paciente: {{ pedido.receita_paciente.paciente.nome }} · ref. {{ pedido.receita_paciente.paciente.referencia }}</p>
+            {% if pedido.receita_paciente.recomendacao.posologia %}
+              <p class="meta">Posologia: {{ pedido.receita_paciente.recomendacao.posologia }}</p>
+            {% endif %}
+            <p class="meta">Pedido em {{ pedido.criado_em.strftime('%d/%m/%Y %H:%M') }}</p>
+          </div>
+          <form method="POST" action="{{ url_for('farmacia.responder_pedido', pedido_id=pedido.id) }}" class="pedido-form">
+            <div class="pedido-form-linha">
+              <input type="number" step="0.01" min="0" name="preco" placeholder="Preço (Kz)">
+              <button type="submit" name="acao" value="disponivel" class="btn btn-sm">Confirmar disponível</button>
+            </div>
+            <div class="pedido-form-linha">
+              <input type="text" name="observacao" placeholder="Observação (opcional)">
+              <button type="submit" name="acao" value="indisponivel" class="btn btn-sm btn-outline-erro">Indisponível</button>
+            </div>
+          </form>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p class="dash-empty">Nenhum pedido pendente no momento.</p>
+    {% endif %}
+  </div>
+
+  <div class="dash-card">
+    <h3><i class="bi bi-clock-history"></i> Respondidos recentemente</h3>
+    {% if respondidos %}
+      <table class="dash-table">
+        <thead><tr><th>Paciente</th><th>Medicação</th><th>Status</th><th>Preço</th><th>Respondido em</th></tr></thead>
+        <tbody>
+        {% for pedido in respondidos %}
+          <tr>
+            <td>{{ pedido.receita_paciente.paciente.nome }}</td>
+            <td>{{ pedido.receita_paciente.recomendacao.titulo }}</td>
+            <td><span class="dash-pill {{ 'compativel' if pedido.status == 'disponivel' else 'incompativel' }}">
+              {{ 'Disponível' if pedido.status == 'disponivel' else 'Indisponível' }}
+            </span></td>
+            <td>{{ '%.2f Kz'|format(pedido.preco) if pedido.preco else '—' }}</td>
+            <td>{{ pedido.respondido_em.strftime('%d/%m/%Y %H:%M') if pedido.respondido_em else '—' }}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p class="dash-empty">Ainda não há pedidos respondidos.</p>
+    {% endif %}
+  </div>
+{% endblock %}
