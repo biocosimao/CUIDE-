@@ -1,0 +1,54 @@
+{% extends "dashboard/base_dash.html" %}
+{% block title %}Nova recomendação{% endblock %}
+{% block content %}
+  <div class="dash-header-row"><div>
+    <h2>Nova recomendação / receita</h2>
+    <p>Só médicos e enfermeiros podem cadastrar. Defina bem as condições de uso — é isso que o sistema usa para verificar cada paciente.</p>
+  </div></div>
+
+  <div class="dash-alert">
+    <i class="bi bi-shield-check"></i> Você está criando a fonte da verdade desta recomendação. O sistema nunca a altera nem a substitui — só confere compatibilidade.
+  </div>
+
+  <form method="POST" class="dash-card dash-form">
+    <label>Título</label>
+    <input type="text" name="titulo" required placeholder="Ex: Paracetamol 500mg (venda livre)">
+
+    <label>Tipo</label>
+    <select name="tipo">
+      <option value="farmaco_venda_livre">Fármaco de venda livre</option>
+      <option value="medida_geral">Medida geral (repouso, hidratação...)</option>
+      <option value="encaminhamento">Encaminhamento para consulta</option>
+    </select>
+
+    <label>Descrição / indicação</label>
+    <textarea name="descricao" required placeholder="Ex: Para febre acima de 37.8°C ou dor leve a moderada."></textarea>
+
+    <label>Posologia (opcional)</label>
+    <input type="text" name="posologia" placeholder="Ex: 1 comprimido a cada 6h · máx. 4 doses/24h">
+
+    <div class="grid-2">
+      <div>
+        <label>Idade mínima (anos)</label>
+        <input type="number" name="idade_min" min="0">
+      </div>
+      <div>
+        <label>Idade máxima (anos)</label>
+        <input type="number" name="idade_max" min="0">
+      </div>
+      <div>
+        <label>Peso mínimo (kg)</label>
+        <input type="number" step="0.1" name="peso_min_kg" min="0">
+      </div>
+      <div>
+        <label>Contraindicado se alérgico a (vírgula)</label>
+        <input type="text" name="contraindicacoes_alergia" placeholder="Ex: dipirona, aspirina">
+      </div>
+    </div>
+
+    <div class="dash-form-actions">
+      <a href="{{ url_for('dashboard.recomendacoes') }}" class="dash-btnsecond">Cancelar</a>
+      <button type="submit" class="dash-btnprimary">Cadastrar recomendação</button>
+    </div>
+  </form>
+{% endblock %}
