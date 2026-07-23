@@ -1,0 +1,54 @@
+
+
+.perfil-grid{
+  display:grid; grid-template-columns: 1fr 1fr; gap:10px; padding: 15px;
+}
+.perfil-item{
+  background:#fff; border:1px solid #79797973; border-radius:14px; padding:10px 14px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+.perfil-item span{ 
+  display:block; 
+  color:#9ca3af; 
+  font-size:12px;
+ }
+
+.perfil-item strong{ 
+  font-size:15px; 
+}
+
+.btn-logout{
+  display:block;
+  text-align:center; 
+  background:#fee2e2;
+  color:#b91c1c;
+  border:1px solid #fca5a5; 
+  border-radius:16px; 
+  padding:14px; 
+  margin: 10px 13px; 
+  font-weight:600;
+}
+
+.btn-logout:hover{
+   background:#fecaca;
+
+}
+
+@media (min-width: 768px){
+  .perfil-grid{ 
+    grid-template-columns: repeat(3, 1fr);
+   }
+}
+
+/* Linhas do formulário com 2-3 campos lado a lado, que se ajustam em telas estreitas */
+.perfil-linha-3{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 0 15px;
+  margin-top: 10px;
+}
+.perfil-col{
+  flex: 1 1 130px;
+  min-width: 130px;
+}

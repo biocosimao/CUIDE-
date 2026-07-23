@@ -1,0 +1,19 @@
+
+
+#relatorio-resultado{ font-size: 14px;
+ }
+#relatorio-export{ display: flex;
+ }
+
+#relatorio-export .btn{ 
+   flex: 1; 
+   color: black;
+   background-color: #fff;
+   border: 2px solid silver;
+   
+}
+
+.btn-IA{
+background-color: rgb(236, 95, 7);
+margin-top: 20px;
+}

@@ -1,0 +1,73 @@
+
+
+.Registro-Sintomas{
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  margin-bottom: 15px;
+  margin-top: 20px;
+  margin-left: 20px;
+}
+.logo-registro{
+   width: 40px; height: 40px; background: #affadd; border-radius: 50%;
+   display: flex; align-items: center; justify-content: center; font-size: 28px;
+   flex-shrink: 0;
+}
+.header-sintoma-icone{ display: flex; 
+  align-items: center; 
+  gap: 8px;
+ }
+
+.header-sintoma-icone > div:last-child{ min-width: 0; }
+.header-sintoma-icone h1{ overflow-wrap: break-word; }
+
+.header-sintoma-icone p{ 
+  color:#848484; 
+  font-size: 14px; 
+}
+
+.header-sintoma-icone h1{  
+  font-size: 18px; 
+}
+
+.btns-sintoma{ 
+  display: flex; 
+  gap: 10px; 
+  justify-content: center; 
+  align-items: center; 
+}
+
+.btns-sintoma button{
+  display: flex; 
+  color: #fff; 
+  align-items: center; 
+  justify-content: center;
+  gap: 8px; 
+  width: 45%;
+  font-size: 14px;
+  font-weight: 600;
+   height: 50px; 
+   border: none;
+    padding: 10px; 
+    border-radius: 23px;
+}
+.btns-sintoma .btn-novo{ background-color: var(--vende-sucesso); }
+.btns-sintoma .btn-ia{ background-color: #f76105f6; }
+
+.historico-sintoma p{ color: #848484; margin-left: 10px; margin-top: 10px; }
+
+.lista-card{
+  margin-bottom: 50%;
+}
+
+.badge-intensidade{
+  min-width: 32px; height: 32px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 14px; flex-shrink: 0;
+  background: #fee2e2; color: #be185d;
+}
+.badge-intensidade.leve{ background: #d1fae5; color: #065f46; }
+.badge-intensidade.moderado{ background: #fef3c7; color: #92400e; }
+.badge-intensidade.forte{ background: #fee2e2; color: #b91c1c; }
+
+#input-intensidade{ width: 100%; accent-color: var(--vende-sucesso); }

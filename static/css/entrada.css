@@ -1,0 +1,89 @@
+.entrada-body{
+  min-height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  background: #f4fbf8; /* cor revelada por baixo, igual ao fundo do app */
+}
+
+/* Os dois painéis, juntos, cobrem a tela toda com o mesmo corte diagonal
+   do fundo da tela de login (verde em cima, branco embaixo). */
+.entrada-painel{
+  position: fixed;
+  inset: 0;
+  transition: transform .85s cubic-bezier(.65, 0, .35, 1);
+}
+.entrada-painel-verde{
+  background: linear-gradient(160deg, #00c896 0%, #0f9e75 100%);
+  clip-path: polygon(0 0, 100% 0, 100% 45%, 0 65%);
+  z-index: 2;
+}
+.entrada-painel-branco{
+  background: #f4fbf8;
+  clip-path: polygon(0 65%, 100% 45%, 100% 100%, 0 100%);
+  z-index: 1;
+}
+
+/* Abrir: o painel verde sobe, o branco desce — como duas portas */
+body.entrada-sair .entrada-painel-verde{ transform: translateY(-100%); }
+body.entrada-sair .entrada-painel-branco{ transform: translateY(100%); }
+
+.entrada-conteudo{
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: opacity .35s ease;
+}
+body.entrada-sair .entrada-conteudo{ opacity: 0; }
+
+.entrada-logo-circulo{
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  border: 1px solid rgba(255,255,255,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 6px;
+  animation: entrada-pulso 1.3s ease-in-out infinite;
+}
+.entrada-logo-circulo i{ font-size: 44px; color: #ffffff; }
+
+.entrada-titulo{
+  color: #ffffff;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: .5px;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.12);
+}
+
+.entrada-pontos{
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+.entrada-pontos span{
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #ffffff;
+  opacity: .4;
+  animation: entrada-pontinho 1s ease-in-out infinite;
+}
+.entrada-pontos span:nth-child(2){ animation-delay: .15s; }
+.entrada-pontos span:nth-child(3){ animation-delay: .3s; }
+
+@keyframes entrada-pulso{
+  0%, 100%{ transform: scale(1); }
+  50%{ transform: scale(1.08); }
+}
+@keyframes entrada-pontinho{
+  0%, 100%{ opacity: .35; transform: translateY(0); }
+  50%{ opacity: 1; transform: translateY(-4px); }
+}

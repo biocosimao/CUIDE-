@@ -1,0 +1,13 @@
+
+.receitas{
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  margin-bottom: 20px;
+}
+
+.rx-feedback{ font-size:13px; margin-top:10px; padding:0 10px; }
+.rx-feedback.erro{ color:#b91c1c; }
+.rx-feedback.ok{ color:#065f46; }
+
+.lista-receitas-container{ margin-top: 10px; }

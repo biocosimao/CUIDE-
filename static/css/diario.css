@@ -1,0 +1,63 @@
+
+
+.conteiner-diar{
+   display: flex;
+   justify-content: center;
+    align-items: center; 
+    gap: 15px; 
+  }
+
+.carde-diar{
+  background-color: var(--cinza-cards);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  border: solid 1px #79797973;
+  border-radius: 15px;
+  padding: 12px;
+  display: grid;
+  gap: 7px;
+  width: 40%;
+  min-height: 88px;
+  margin-top: 30px;
+}
+.diar-icone{ display: flex;
+   align-items: center;
+    gap: 8px;
+   }
+.diar-icone i{ color: #0BC007; }
+.diar-icone p{ color: #848484; }
+
+.diar-registrar{
+   display: flex;
+   justify-content: center; 
+   flex-direction: column; 
+   align-items: center; 
+  }
+
+.diar-registrar button{
+  background-color: var(--vende-sucesso);
+  width: 88%; height:
+   50px; border: none;
+   border-radius: 20px;
+  color: #ffffff; 
+  font-size:18px;
+   margin-bottom: 20px;
+   margin-top: 28px;
+}
+.carde-registro{
+  background-color: #ffffff;
+  width: 88%;
+  border: solid 1px #79797973;
+  border-radius: 20px;
+  padding: 12px;
+
+}
+.carde-registro p{
+   color: #848484;
+ }
+
+
+#input-agua, #input-sono{ 
+  width: 100%;
+   accent-color: var(--vende-sucesso); 
+   
+  }

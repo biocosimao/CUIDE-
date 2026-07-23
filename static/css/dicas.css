@@ -1,0 +1,51 @@
+
+
+.dikas-icone{
+   width: 48px;
+    height: 48px;
+     border-radius: 50%; 
+     background:#affadd;
+   display: flex; 
+   justify-content: center;
+    align-items: center;
+}
+.dikas-icone i{ 
+  color:var(--vende-sucesso);
+ }
+.dikas{ display: flex; 
+  align-items: center; 
+  gap: 5px; 
+  padding: 10px;
+ }
+.dick{ display: flex; 
+  flex-direction: column;
+   gap: 5px; 
+   margin-bottom: 30px; 
+   margin-left: 10px;
+   }
+
+.dick p{ 
+  color: #848484; 
+  font-size: 13px; 
+}
+
+.conteiner{ 
+  display: flex; 
+  flex-direction: column;
+   gap: 15px; 
+  }
+
+.-carde{
+  align-items: center;
+   display: flex;
+   gap: 9px;
+  background-color: #FFFFFF;
+   border: solid 1px #79797973;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  border-radius: 15px; place-self: center;
+  width:98%; 
+  height: 110px; 
+  padding: 15px;
+}
+.-carde h4{ margin-bottom: 8px; }
+.-carde p{ color: #848484; font-size: 14px; }
