@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Receita{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/receita.css') }}">{% endblock %}
+{% block content %}
+   <main>
+     <section class="Sintomas">
+          <div class="header-receita">
+          <div class="header-receita-icone">
+            <div class="-carde-icone"><i class="bi bi-capsule"></i></div>
+            <h2>Receitas e recomendações</h2>
+          </div>
+          <p>Receitas registradas por profissionais ficam aqui. Você não pode adicionar medicações por conta própria</p>
+        </div>
+        <div class="messagem2">
+           <p>Este app não receita nem se auto-medica.
+            Toda recomendação vem de profissionais de saude</p>
+         </div>
+        </section>
+   </main>
+
+     <div class="card-form">
+      <div class="text">
+        <span>+</span>
+        <h3>Vincular receita do médico</h3>
+      </div>
+      <p>Cole o código que o hospital forneceu (simulado neste protótipo).</p>
+
+      <div class="input-group">
+        <input type="text" id="rx-code" placeholder="RX-7HQ2">
+        <button onclick="vincularReceita()" class="btn">Vincular</button>
+      </div>
+      <a href="#" onclick="carregarExemplo(); return false;" style="color:#10b981; font-size:14px; margin-left:10px;">Carregar exemplos</a>
+      <p id="rx-feedback" class="rx-feedback"></p>
+    </div>
+
+    <section class="lista-receitas-container">
+      <p class="historico-titulo">Suas receitas</p>
+      <div id="lista-receitas" class="lista-cards">
+        <p class="vazio">Carregando...</p>
+      </div>
+    </section>
+
+    <section class="space-limite"></section>
+{% endblock %}
+{% block scripts %}
+<script>document.addEventListener('DOMContentLoaded', carregarReceitas);</script>
+{% endblock %}

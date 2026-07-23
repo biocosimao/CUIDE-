@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}Diário{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/diario.css') }}">{% endblock %}
+{% block content %}
+   <main>
+   <section class="receitas">
+          <div class="header-receita">
+          <div class="header-receita-icone">
+            <div class="-carde-icone"><i class="bi bi-journal-text"></i></div>
+            <h2>Diário diário</h2>
+          </div>
+          <p>Alimentação, hidratação, sono e hábitos</p>
+        </div>
+        <div class="messagem2">
+           <p>Este app não receita nem se auto-medica.
+            Toda recomendação vem de profissionais de saude</p>
+         </div>
+        
+   <div class="tempo" style="width:88%; margin: 0 auto 15px; margin-top:20px;">
+     <div id="tab-hoje" class="carde-tempo active-tempo" onclick="mudarPeriodo('hoje')"><h4>Hoje</h4></div>
+     <div id="tab-semana" class="carde-tempo" onclick="mudarPeriodo('semana')"><h4>Semana</h4></div>
+   </div>
+         <div class="conteiner-diar">
+           <div class="carde-diar">
+             <div class="diar-icone">
+               <i class="bi bi-droplet"></i>
+               <p>Água (copos)</p>
+             </div>
+             <h2 id="agua-hoje">0</h2>
+           </div>
+           <div class="carde-diar">
+             <div class="diar-icone">
+               <i class="bi bi-moon"></i>
+               <p>Horas de sono</p>
+             </div>
+             <h2 id="sono-hoje">0</h2>
+           </div>
+         </div>
+         <div class="diar-registrar">
+           <button type="button" onclick="abrirModalDiario()">+ Registrar</button>
+           <div id="lista-diario" class="lista-cards" style="width:88%;">
+             <div class="carde-registro"><p>Carregando...</p></div>
+           </div>
+         </div>
+        </section>
+   </main>
+
+   <div id="modal-diario" class="modal-overlay" style="display:none;">
+     <div class="modal-box">
+       <h3>Registrar</h3>
+       <label>Refeição</label>
+       <input type="text" id="input-refeicao" placeholder="Café: pão integral, ovo. Almoço: arroz, feijão, frango...">
+       <label>Água (copos): <span id="valor-agua">6</span></label>
+       <input type="range" id="input-agua" min="0" max="15" value="6"
+              oninput="document.getElementById('valor-agua').textContent = this.value">
+       <label>Horas de sono: <span id="valor-sono">7</span>h</label>
+       <input type="range" id="input-sono" min="0" max="12" value="7"
+              oninput="document.getElementById('valor-sono').textContent = this.value">
+       <label>Como se sentiu</label>
+       <input type="text" id="input-como-se-sentiu" placeholder="Bem, cansado, ansioso...">
+       <div class="modal-acoes">
+         <button type="button" class="btn-cancelar" onclick="fecharModalDiario()">Cancelar</button>
+         <button type="button" class="btn-salvar" onclick="salvarDiario()">Registrar</button>
+       </div>
+     </div>
+   </div>
+{% endblock %}
+{% block scripts %}
+<script>document.addEventListener('DOMContentLoaded', carregarDiario);</script>
+{% endblock %}

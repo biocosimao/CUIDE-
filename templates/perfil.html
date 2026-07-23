@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+{% block title %}Perfil{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/perfil.css') }}">{% endblock %}
+{% block content %}
+   <main>
+     <section class="Sintomas">
+       {% if salvo %}
+       <div class="messagem2" style="background:#d1fae5;">
+         <p><i class="bi bi-check-circle"></i> Perfil salvo com segurança.</p>
+       </div>
+       {% endif %}
+       {% if erro %}
+       <div class="messagem2" style="background:#fee2e2;">
+         <p><i class="bi bi-exclamation-triangle"></i> {{ erro }}</p>
+       </div>
+       {% endif %}
+       <div class="header-receita">
+          <div class="header-receita-icone">
+            <div class="-carde-icone"><i class="bi bi-person-vcard"></i></div>
+            <h2>Perfil de saúde</h2>
+          </div>
+          <p>Mantenha seus dados atualizados — eles ajudam o sistema a validar recomendações.</p>
+        </div>
+        <div class="messagem2">
+           <p>Este app não receita nem se auto-medica. Toda recomendação vem de profissionais de saúde.</p>
+         </div>
+     </section>
+   </main>
+
+   <form method="POST" class="card-form" style="max-width:100%;">
+     <label class="form-label">Nome</label>
+     <input type="text" name="nome" class="form-select" value="{{ paciente.nome }}">
+
+     <label class="form-label">E-mail</label>
+     <input type="email" name="email" class="form-select" value="{{ paciente.email }}">
+
+     <label class="form-label">Número de telefone</label>
+     <input type="text" name="telefone" class="form-select" value="{{ paciente.telefone or '' }}" placeholder="+244 9xx xxx xxx">
+
+     <div class="perfil-linha-3">
+       <div class="perfil-col">
+         <label class="form-label" style="margin-left:0;">Data de nascimento</label>
+         <input type="text" name="data_nascimento" class="form-select" style="margin-left:0; width:100%;" placeholder="DD/MM/AAAA" inputmode="numeric" maxlength="10" oninput="mascararData(this)" value="{{ paciente.data_nascimento.strftime('%d/%m/%Y') if paciente.data_nascimento else '' }}">
+       </div>
+       <div class="perfil-col">
+         <label class="form-label" style="margin-left:0;">Sexo</label>
+         <select name="sexo" class="form-select" style="margin-left:0; width:100%;">
+           <option value="">—</option>
+           <option value="feminino" {% if paciente.sexo=='feminino' %}selected{% endif %}>Feminino</option>
+           <option value="masculino" {% if paciente.sexo=='masculino' %}selected{% endif %}>Masculino</option>
+           <option value="outro" {% if paciente.sexo=='outro' %}selected{% endif %}>Outro</option>
+         </select>
+       </div>
+     </div>
+
+     <div class="perfil-linha-3">
+       <div class="perfil-col">
+         <label class="form-label" style="margin-left:0;">Peso (kg)</label>
+         <input type="number" step="0.1" name="peso_kg" class="form-select" style="margin-left:0; width:100%;" value="{{ paciente.peso_kg or '' }}">
+       </div>
+       <div class="perfil-col">
+         <label class="form-label" style="margin-left:0;">Altura (cm)</label>
+         <input type="number" step="0.1" name="altura_cm" class="form-select" style="margin-left:0; width:100%;" value="{{ paciente.altura_cm or '' }}">
+       </div>
+       <div class="perfil-col">
+         <label class="form-label" style="margin-left:0;">Tipo sanguíneo</label>
+         <select name="tipo_sanguineo" class="form-select" style="margin-left:0; width:100%;">
+           <option value="">—</option>
+           {% for t in ["A+","A-","B+","B-","AB+","AB-","O+","O-"] %}
+             <option value="{{ t }}" {% if paciente.tipo_sanguineo==t %}selected{% endif %}>{{ t }}</option>
+           {% endfor %}
+         </select>
+       </div>
+     </div>
+
+
+     <label class="form-label">Alergias (medicamentos, alimentos, contrastes...)</label>
+     <textarea name="alergias" class="form-select" style="width: calc(100% - 40px); height:70px;">{{ paciente.alergias|map(attribute='descricao')|join(', ') }}</textarea>
+
+     <label class="form-label">Doenças e condições relevantes (crônicas, congênitas)</label>
+     <textarea name="condicoes_relevantes" class="form-select" style="width: calc(100% - 40px); height:70px;">{{ paciente.historico_doencas|selectattr('tipo','equalto','cronica_ou_congenita')|map(attribute='doenca')|join(', ') }}</textarea>
+
+     <label class="form-label">Doenças atuais (em análise)</label>
+     <textarea name="doencas_atuais" class="form-select" style="width: calc(100% - 40px); height:70px;">{{ paciente.historico_doencas|selectattr('tipo','equalto','atual_em_analise')|map(attribute='doenca')|join(', ') }}</textarea>
+
+     <div class="card-form" style="margin: 15px; box-shadow:none; border:1px solid #79797973; padding:15px;">
+       <h3 style="margin-bottom:10px;">Estilo de vida</h3>
+       <div style="display:flex; gap:10px;">
+         <div style="flex:1;">
+           <label class="form-label" style="margin-left:0;">Tabagismo</label>
+           <select name="tabagismo" class="form-select" style="margin-left:0; width:100%;">
+             <option value="nunca" {% if paciente.tabagismo=='nunca' %}selected{% endif %}>Nenhum</option>
+             <option value="ex_fumante" {% if paciente.tabagismo=='ex_fumante' %}selected{% endif %}>Baixo</option>
+             <option value="fumante" {% if paciente.tabagismo=='fumante' %}selected{% endif %}>Moderado/Alto</option>
+           </select>
+         </div>
+         <div style="flex:1;">
+           <label class="form-label" style="margin-left:0;">Álcool</label>
+           <select name="consumo_alcool" class="form-select" style="margin-left:0; width:100%;">
+             <option value="nunca" {% if paciente.consumo_alcool=='nunca' %}selected{% endif %}>Nenhum</option>
+             <option value="social" {% if paciente.consumo_alcool=='social' %}selected{% endif %}>Baixo</option>
+             <option value="frequente" {% if paciente.consumo_alcool=='frequente' %}selected{% endif %}>Moderado/Alto</option>
+           </select>
+         </div>
+       </div>
+       <div style="display:flex; gap:10px; margin-top:10px;">
+         <div style="flex:1;">
+           <label class="form-label" style="margin-left:0;">Atividade física</label>
+           <select name="atividade_fisica" class="form-select" style="margin-left:0; width:100%;">
+             <option value="sedentario" {% if paciente.atividade_fisica=='sedentario' %}selected{% endif %}>Nenhum/Baixo</option>
+             <option value="moderado" {% if paciente.atividade_fisica=='moderado' %}selected{% endif %}>Moderado</option>
+             <option value="ativo" {% if paciente.atividade_fisica=='ativo' %}selected{% endif %}>Alto</option>
+           </select>
+         </div>
+         <div style="flex:1;">
+           <label class="form-label" style="margin-left:0;">Qualidade do sono</label>
+           <select name="qualidade_sono" class="form-select" style="margin-left:0; width:100%;">
+             <option value="boa" {% if paciente.qualidade_sono=='boa' %}selected{% endif %}>Boa</option>
+             <option value="regular" {% if paciente.qualidade_sono=='regular' %}selected{% endif %}>Regular</option>
+             <option value="ma" {% if paciente.qualidade_sono=='ma' %}selected{% endif %}>Ruim</option>
+           </select>
+         </div>
+       </div>
+       <label class="form-label" style="margin-left:0;">Alimentação habitual</label>
+       <textarea name="alimentacao_habitual" class="form-select" style="margin-left:0; width:100%; height:60px;">{{ paciente.alimentacao_habitual or '' }}</textarea>
+     </div>
+
+     <div style="padding: 0 15px 20px;">
+       <button type="submit" class="btn" style="width:100%;">Salvar perfil</button>
+     </div>
+   </form>
+
+   <section class="space-limite">
+     <a href="{{ url_for('paciente.logout') }}" class="btn-logout">Sair da conta</a>
+   </section>
+{% endblock %}

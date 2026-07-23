@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}Consultas{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/receita.css') }}">{% endblock %}
+{% block content %}
+   <main>
+     <section class="Sintomas">
+          <div class="header-receita">
+          <div class="header-receita-icone">
+            <div class="-carde-icone"><i class="bi bi-calendar-heart"></i></div>
+            <h2>Consultas</h2>
+          </div>
+          <p>Marque uma consulta num hospital parceiro e acompanhe o status.</p>
+        </div>
+        <div class="messagem2">
+           <p>Este app não receita nem se auto-medica.
+            Toda recomendação vem de profissionais de saude</p>
+         </div>
+        </section>
+   </main>
+
+     <div class="card-form">
+      <div class="text">
+        <span>+</span>
+        <h3>Marcar consulta</h3>
+      </div>
+      <p>Escolha o hospital, a data e o motivo da consulta.</p>
+
+      <label class="form-label" style="margin-left:0;">Tipo de consulta</label>
+      <div class="tipo-consulta-opcoes">
+        <label class="tipo-consulta-opcao">
+          <input type="radio" name="consulta-tipo" value="presencial" checked>
+          <span><i class="bi bi-hospital"></i> Presencial</span>
+        </label>
+        <label class="tipo-consulta-opcao">
+          <input type="radio" name="consulta-tipo" value="online">
+          <span><i class="bi bi-camera-video"></i> Online</span>
+        </label>
+      </div>
+
+      <label class="form-label" style="margin-left:0; margin-top:14px;">Hospital</label>
+      <select id="consulta-hospital" class="form-select" style="margin-left:0; width:100%;">
+        {% if hospitais %}
+          {% for h in hospitais %}
+            <option value="{{ h.id }}">{{ h.nome }}</option>
+          {% endfor %}
+        {% else %}
+          <option value="">Nenhum hospital cadastrado</option>
+        {% endif %}
+      </select>
+
+      <label class="form-label" style="margin-left:0; margin-top:14px;">Data e hora</label>
+      <input type="datetime-local" id="consulta-data" class="form-select" style="margin-left:0; width:100%;">
+
+      <label class="form-label" style="margin-left:0; margin-top:14px;">Motivo (opcional)</label>
+      <input type="text" id="consulta-motivo" class="form-select" style="margin-left:0; width:100%;" placeholder="Consulta geral, retorno, exame...">
+
+      <button type="button" class="btn" style="width:100%; margin-top:16px;" onclick="marcarConsulta()">Marcar consulta</button>
+      <p id="consulta-feedback" class="rx-feedback"></p>
+    </div>
+
+    <section class="lista-receitas-container">
+      <p class="historico-titulo">Suas consultas</p>
+      <div id="lista-consultas" class="lista-cards">
+        <p class="vazio">Carregando...</p>
+      </div>
+    </section>
+
+    <section class="space-limite"></section>
+{% endblock %}
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  carregarConsultas();
+  const agora = new Date();
+  agora.setMinutes(agora.getMinutes() - agora.getTimezoneOffset());
+  document.getElementById('consulta-data').value = agora.toISOString().slice(0,16);
+});
+</script>
+{% endblock %}

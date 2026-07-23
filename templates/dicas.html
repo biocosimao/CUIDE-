@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Dicas{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/dicas.css') }}">{% endblock %}
+{% block content %}
+   <main>
+      <div class="dick">
+        <div class="dikas">
+         <div class="dikas-icone">
+            <i class="bi bi-lightbulb"></i>
+         </div>
+        <div>
+           <h2>Dicas de saúde</h2>
+         <p>Hábitos pequenos, impacto grande</p>
+        </div>
+        </div>
+      </div>
+      <div class="conteiner">
+        <div class="-carde">
+          <div class="-carde-icone"><i class="bi bi-droplet"></i></div>
+          <div class="-carde-conteudo">
+            <h4>Hidratação</h4>
+            <p>Beba ao menos 2L por dia, mais em dias quentes ou exercício.</p>
+          </div>
+        </div>
+        <div class="-carde">
+          <div class="-carde-icone"><i class="bi bi-sun"></i></div>
+          <div class="-carde-conteudo">
+            <h4>Sol moderado</h4>
+            <p>15 minutos de sol pela manhã ajudam na produção de vitamina D.</p>
+          </div>
+        </div>
+        <div class="-carde">
+          <div class="-carde-icone"><i class="bi bi-moon"></i></div>
+          <div class="-carde-conteudo">
+          <h4>Sono regular</h4>
+          <p>Durma 7-9h em horários consistentes para melhorar humor e imunidade.</p>
+        </div>
+        </div>
+        <div class="-carde">
+          <div class="-carde-icone"><i class="bi bi-apple"></i></div>
+          <div class="-carde-conteudo">
+            <h4>Alimentação colorida</h4>
+            <p>Frutas e vegetais variados em cores diferentes garantem mais nutrientes</p>
+          </div>
+        </div>
+        <div class="-carde">
+          <div class="-carde-icone"><i class="bi bi-activity"></i></div>
+          <div class="-carde-conteudo">
+            <h4>Mexa-se</h4>
+            <p>30 min de caminhada por dia já reduz risco cardiovascular.</p>
+          </div>
+        </div>
+      </div>
+   </main>
+
+   <section class="space-limite"></section>
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}Relatório{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/relatorio.css') }}">{% endblock %}
+{% block content %}
+   <main>
+     <section class="Sintomas">
+       <div class="header-receita">
+          <div class="header-receita-icone">
+            <div class="-carde-icone"><i class="bi bi-file-earmark-bar-graph"></i></div>
+            <h2>Relatório periódico</h2>
+          </div>
+          <p>Compilação dos seus registros com possíveis padrões.</p>
+        </div>
+        <div class="messagem2">
+           <p>Este app não receita nem se auto-medica. Toda recomendação vem de profissionais de saúde.</p>
+         </div>
+     </section>
+   </main>
+
+   <div class="tempo" style="width:88%; margin: 0 auto 15px;">
+     <div class="carde-tempo {% if periodo=='semanal' %}active-tempo{% endif %}" onclick="mudarPeriodo('semanal')"><h4>Semanal</h4></div>
+     <div class="carde-tempo {% if periodo=='mensal' %}active-tempo{% endif %}" onclick="mudarPeriodo('mensal')"><h4>Mensal</h4></div>
+   </div>
+
+   {% if faltando %}
+   <div class="card-form" style="border:1px solid silver; background:#fffbeb;">
+     <h3 style="color:#92400e;">Faltam dados importantes</h3>
+     <p style="margin-bottom:10px;">Preencha o que estiver faltando antes de gerar:</p>
+     <ul style="margin-left:20px; color:#92400e;">
+       {% for f in faltando %}<li>{{ f }}</li>{% endfor %}
+     </ul>
+     
+   </div>
+   {% endif %}
+
+   <div style="padding: 0 15px;">
+     <button class="btn-IA" style="width:100%;" onclick="gerarRelatorio('{{ periodo }}')">
+       <i class="bi bi-stars"></i> Gerar relatório com IA
+     </button>
+   </div>
+
+   <div id="relatorio-resultado" class="card-form" style="display:none; white-space:pre-wrap; line-height:1.6;"></div>
+
+   <div id="relatorio-export" style="display:none; padding: 15px; gap:10px; display:none;">
+     <a class="btn" style="text-decoration:none;" href="{{ url_for('paciente.exportar_relatorio', formato='pdf', periodo=periodo) }}"><i class="bi bi-file-earmark-pdf"></i> PDF</a>
+     <a class="btn" style="text-decoration:none;" href="{{ url_for('paciente.exportar_relatorio', formato='csv', periodo=periodo) }}"><i class="bi bi-file-earmark-spreadsheet"></i> CSV</a>
+   </div>
+
+   <section class="space-limite"></section>
+{% endblock %}
+{% block scripts %}
+<script>
+function mudarPeriodo(p) {
+  window.location.href = "{{ url_for('paciente.relatorio_page') }}?periodo=" + p;
+}
+async function gerarRelatorio(periodo) {
+  const resultado = document.getElementById('relatorio-resultado');
+  const exportBox = document.getElementById('relatorio-export');
+  resultado.style.display = 'block';
+  resultado.textContent = 'Gerando...';
+  const resp = await fetch('/api/relatorio/gerar', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({periodo}),
+  });
+  const dados = await resp.json();
+  resultado.textContent = dados.texto;
+  exportBox.style.display = 'flex';
+}
+</script>
+{% endblock %}

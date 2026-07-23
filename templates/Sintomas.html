@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}Sintomas{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/sintomas.css') }}">{% endblock %}
+{% block content %}
+      <main>
+        <section class="Registro-Sintomas">
+          <div class="header-sintoma-icone">
+    <div class="logo-registro"><i class="bi bi-heart-pulse" style="color:#10b981;"></i></div>
+    <div>
+      <h1>Registro de sintomas</h1>
+      <p>Acompanhe a evolução dos seus sintomas ao longo do tempo.</p>
+    </div>
+  </div>
+        <div class="messagem2">
+           <p>Este app não receita nem se auto-medica.
+            Toda recomendação vem de profissionais de saude</p>
+         </div>
+         <div class="btns-sintoma">
+           <button type="button" class="btn-novo" onclick="abrirModalSintoma()"><i class="bi bi-plus-lg"></i>Novo sintoma</button>
+           <button type="button" class="btn-ia" onclick="organizarComIA()"><i class="bi bi-stars"></i>Organizar com IA</button>
+         </div>
+        </section>
+        <section class="historico-sintoma">
+          <p class="historico-titulo">Histórico</p>
+          <div id="lista-sintomas" class="lista-cards">
+            <p class="vazio">Carregando...</p>
+          </div>
+        </section>
+        <section class="historico-sintoma">
+          <p class="historico-titulo">Ver recomendações aplicáveis</p>
+          <div id="lista-recomendacoes-aplicaveis" class="lista-cards">
+            <p class="vazio">Carregando...</p>
+          </div>
+        </section>
+      </main>
+      
+
+      
+      <div id="modal-sintoma" class="modal-overlay" style="display:none;">
+        <div class="modal-box">
+          <h3>Novo sintoma</h3>
+          <label>Sintoma</label>
+          <input type="text" id="input-sintoma-nome" placeholder="Dor de cabeça, febre, tosse...">
+          <label>Intensidade: <span id="valor-intensidade">5</span>/10</label>
+          <input type="range" id="input-intensidade" min="0" max="10" value="5"
+                 oninput="document.getElementById('valor-intensidade').textContent = this.value">
+          <label>Quando começou</label>
+          <input type="datetime-local" id="input-data-inicio">
+          <label>Observações</label>
+          <textarea id="input-descricao" placeholder="Detalhes adicionais..."></textarea>
+          <div class="modal-acoes">
+            <button type="button" class="btn-cancelar" onclick="fecharModalSintoma()">Cancelar</button>
+            <button type="button" class="btn-salvar" onclick="salvarSintoma()">Registrar</button>
+          </div>
+        </div>
+      </div>
+{% endblock %}
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  carregarSintomas();
+  carregarRecomendacoesAplicaveis();
+  const agora = new Date();
+  agora.setMinutes(agora.getMinutes() - agora.getTimezoneOffset());
+  document.getElementById('input-data-inicio').value = agora.toISOString().slice(0,16);
+});
+</script>
+{% endblock %}

@@ -1,1 +1,103 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">{% endblock %}
+{% block content %}
+   <main>
+      <section class="messagens">
+         <div class="messagem">
+           <p><span id="saudacao-horario">Bom dia</span>, {{ paciente.nome.split(' ')[0] }}</p>
+           <h4>Como você está hoje?</h4>
+         </div>
+         <div class="messagem2">
+           <p>Este app não receita nem se auto-medica.
+            Toda recomendação vem de profissionais de saude</p>
+         </div>
+      </section>
+      <section class="acoes">
+         <a href="{{ url_for('paciente.sintomas_page') }}" class="card">
+            <div class="icone">
+               <i class="bi bi-heart-pulse"></i>
+            </div>
+            <p>Registrar sintomas</p>
+      </a>
 
+          <a href="{{ url_for('paciente.diario_page') }}" class="card">
+              <div class="icone">
+               <i class="bi bi-journal-text"></i>
+            </div>
+            <p>Registrar refeição</p>
+          </a>
+
+        <a href="{{ url_for('paciente.receitas_page') }}" class="card">
+            <div class="icone">
+               <i class="bi bi-capsule"></i>
+            </div>
+            <p>Vincular receita</p>
+        </a>
+
+           <a href="{{ url_for('paciente.relatorio_page') }}" class="card">
+             <div class="icone">
+               <i class="bi bi-file-earmark-bar-graph"></i>
+            </div>
+            <p>Gerar relatório</p>
+           </a>
+
+          
+
+      </section>
+      <section class="container">
+         <div class="referencia">
+            <div class="refer">
+               <i class="bi bi-person-vcard"></i>
+               <h4>Sua referência</h4>
+            </div>
+            <div class="refe">
+               <h2>{{ paciente.referencia }}</h2>
+               <p>Use no hospital para localizar a sua conta.</p>
+            </div>
+         </div>
+         <div class="dica">
+            <div class="dica_icone">
+               <i class="bi bi-stars"></i>
+               <h4>Dica do dia</h4>
+            </div>
+            <p>Inclua vegetais coloridos em pelo menos duas refeições.</p>
+         </div>
+         <div class="lembrete">
+            <div class="lembrete-icone">
+               <i class="bi bi-bell"></i>
+               <h4>Próximo lembrete</h4>
+            </div>
+            {% if proximo_lembrete %}
+              <p>{{ proximo_lembrete.titulo }} — {{ proximo_lembrete.hora }}</p>
+            {% else %}
+              <p>Sem lembretes para agora.</p>
+            {% endif %}
+         </div>
+
+         <div class="lembrete">
+            <div class="lembrete-icone">
+               <i class="bi bi-calendar-heart"></i>
+               <h4>Próxima consulta</h4>
+            </div>
+            {% if proxima_consulta %}
+              <p>{{ proxima_consulta.hospital.nome }} — {{ proxima_consulta.data_hora.strftime('%d/%m %H:%M') }}</p>
+            {% else %}
+              <p>Nenhuma consulta marcada. <a href="{{ url_for('paciente.consultas_page') }}" style="color:var(--vende-sucesso,#10b981); font-weight:600;">Marcar agora</a></p>
+            {% endif %}
+         </div>
+        
+         <div class="sintoma">
+            <div class="sintoma-icone">
+               <i class="bi bi-activity"></i>
+               <h4>Sintomas recentes</h4>
+            </div>
+            {% if ultimo_sintoma %}
+              <p>{{ ultimo_sintoma.descricao }} ({{ ultimo_sintoma.intensidade }}) — {{ ultimo_sintoma.data_registro.strftime('%d/%m %H:%M') }}</p>
+            {% else %}
+              <p>Nada registrado ainda.</p>
+            {% endif %}
+         </div>
+      </section>
+   </main>
+{% endblock %}
