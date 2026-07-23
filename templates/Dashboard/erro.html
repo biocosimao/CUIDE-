@@ -1,0 +1,9 @@
+{% extends "dashboard/base_dash.html" %}
+{% block title %}Acesso restrito{% endblock %}
+{% block content %}
+  <div class="dash-card" style="text-align:center; padding:50px 20px;">
+    <i class="bi bi-shield-lock" style="font-size:40px; color:#b91c1c;"></i>
+    <h3 style="margin-top:14px;">{{ mensagem }}</h3>
+    <a href="{{ url_for('dashboard.home') }}" class="dash-btn-secondary" style="margin-top:20px; display:inline-flex;">Voltar ao início</a>
+  </div>
+{% endblock %}
